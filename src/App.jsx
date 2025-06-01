@@ -77,9 +77,9 @@ function App() {
             traditional recipes served with a modern twist.
           </p>
           <button className="reserve-btn" onClick={() => {
-        const el = document.querySelector('.booking-section');
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }}>Reserve a Table</button>
+            const el = document.querySelector('.booking-section');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }}>Reserve a Table</button>
         </div>
         <div className="hero-img">
           <img src={heroImg} alt="Green Lemon dishes" />
@@ -115,24 +115,41 @@ function App() {
         </div>
       </section>
       <section className="booking-section">
-        <h2>Reserve a Table</h2>
-        <BookingForm
-          availableTimes={availableTimes}
-          dispatch={dispatch}
-          onBook={handleBook}
-        />
-        <h3>Available Slots</h3>
-        <ul className="booking-slots">
-          {availableTimes.map((time) => (
-            <BookingSlot key={time} time={time} booked={false} />
-          ))}
-        </ul>
-        <h3>Booked Slots</h3>
-        <ul className="booking-slots">
-          {bookings.map((b, i) => (
-            <BookingSlot key={b.time + i} time={b.time} booked={true} />
-          ))}
-        </ul>
+        <div className="booking-form-container">
+          <h2 className="booking-title">Reserve a Table</h2>
+          <p className="booking-subtitle">Book your table in seconds. Choose your date, time, and number of guests.</p>
+          <BookingForm
+            availableTimes={availableTimes}
+            dispatch={dispatch}
+            onBook={handleBook}
+          />
+        </div>
+        <div className="booking-slots-container">
+          <div className="slots-group">
+            <h3 className="slots-title">Available Slots</h3>
+            <ul className="booking-slots">
+              {availableTimes.length === 0 ? (
+                <li className="no-slots">No slots available</li>
+              ) : (
+                availableTimes.map((time) => (
+                  <BookingSlot key={time} time={time} booked={false} />
+                ))
+              )}
+            </ul>
+          </div>
+          <div className="slots-group">
+            <h3 className="slots-title">Booked Slots</h3>
+            <ul className="booking-slots">
+              {bookings.length === 0 ? (
+                <li className="no-slots">No bookings yet</li>
+              ) : (
+                bookings.map((b, i) => (
+                  <BookingSlot key={b.time + i} time={b.time} booked={true} />
+                ))
+              )}
+            </ul>
+          </div>
+        </div>
       </section>
     </div>
   )
